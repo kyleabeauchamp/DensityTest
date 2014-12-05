@@ -2,9 +2,10 @@ from simtk.openmm import app
 import simtk.openmm as mm
 from simtk import unit as u
 
+integrator_type = "langevin2fs_barostat12"
 #integrator_type = "langevin2fs"
 #integrator_type = "langevin1fs"
-integrator_type = "langevin0.5fs"
+#integrator_type = "langevin0.5fs"
 
 n_steps = 500000000
 output_frequency = 500
@@ -13,7 +14,8 @@ dcd_frequency = 5000
 friction = 1.0 / u.picoseconds
 temperature = 300. * u.kelvin
 pressure = 1.0 * u.atmospheres
-barostat_frequency = 25
+#barostat_frequency = 25
+barostat_frequency = 12
 cutoff = 1.2 * u.nanometers  # Towards the high end to avoid cutoff artifacts.
 
 ffxml_filename = "tip3p.xml"
@@ -34,6 +36,7 @@ integrators = {
 "langevin1fs":mm.LangevinIntegrator(temperature, friction, 1.0 * u.femtoseconds),
 "langevin0.5fs":mm.LangevinIntegrator(temperature, friction, 0.5 * u.femtoseconds)
 }
+integrators["langevin2fs_barostat12"] = integrators["langevin2fs"]  # Same integrator, but different barostat frequency.
 
 integrator = integrators[integrator_type]
 
