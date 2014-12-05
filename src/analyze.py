@@ -1,9 +1,15 @@
 import pandas as pd
 import pymbar
 
-data1 = pd.read_csv("./production_langevin1fs.log")["Density (g/mL)"].values
-data2 = pd.read_csv("./production_langevin2fs.log")["Density (g/mL)"].values
-#data2 = pd.read_csv("./production_langevin0.5fs.log")["Density (g/mL)"].values
+#observable = "Density (g/mL)"
+observable = "Temperature (K)"
+
+frame1 = pd.read_csv("./production_langevin1fs.log")
+frame2 = pd.read_csv("./production_langevin2fs.log")
+#frame2 = pd.read_csv("./production_langevin0.5fs.log")
+
+data1 = frame1[observable].values
+data2 = frame2[observable].values
 
 g1 = pymbar.timeseries.statisticalInefficiency(data1)
 neff1 = len(data1) / g1
