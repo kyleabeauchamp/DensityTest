@@ -3,7 +3,8 @@ import simtk.openmm as mm
 from simtk import unit as u
 
 #integrator_type = "langevin2fs"
-integrator_type = "langevin1fs"
+#integrator_type = "langevin1fs"
+integrator_type = "langevin0.5fs"
 
 n_steps = 500000000
 output_frequency = 500
@@ -31,6 +32,7 @@ system = ff.createSystem(topology, nonbondedMethod=app.PME, nonbondedCutoff=cuto
 integrators = {
 "langevin2fs":mm.LangevinIntegrator(temperature, friction, 2.0 * u.femtoseconds), 
 "langevin1fs":mm.LangevinIntegrator(temperature, friction, 1.0 * u.femtoseconds),
+"langevin0.5fs":mm.LangevinIntegrator(temperature, friction, 0.5 * u.femtoseconds)
 }
 
 integrator = integrators[integrator_type]
